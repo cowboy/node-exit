@@ -1,5 +1,3 @@
-var exit = require('../../lib/exit');
-
 var errorCode = process.argv[2];
 var max = process.argv[3];
 var modes = process.argv.slice(4);
