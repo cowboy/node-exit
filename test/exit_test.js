@@ -40,14 +40,16 @@ function run(command, options, callback) {
 }
 
 function showDiff(actual, expected) {
+  actual = actual.replace(/\r\n/g, '\n');
+  expected = expected.replace(/\r\n/g, '\n');
   if (actual === expected) {
     return true;
   } else {
     return jsdiff.diffLines(expected, actual).map(function(d) {
       if (d.removed) {
-        return 'MISSING: ' + d.value;
+        return '**EXPECTED** ' + d.value;
       } else if (d.added) {
-        return 'EXTRA: ' + d.value;
+        return '**UNEXPECTED** ' + d.value;
       }
     }).filter(Boolean).join('');
   }
@@ -57,7 +59,7 @@ function fixture(filename) {
   return String(fs.readFileSync(filename));
 }
 
-exports['awesome'] = {
+exports['exit'] = {
   setUp: function(done) {
     this.origCwd = process.cwd();
     process.chdir('test/fixtures');
