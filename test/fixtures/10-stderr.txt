@@ -1,0 +1,10 @@
+[stderr] testing 0
+[stderr] testing 1
+[stderr] testing 2
+[stderr] testing 3
+[stderr] testing 4
+[stderr] testing 5
+[stderr] testing 6
+[stderr] testing 7
+[stderr] testing 8
+[stderr] testing 9

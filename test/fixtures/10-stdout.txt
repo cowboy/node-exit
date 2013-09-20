@@ -1,0 +1,10 @@
+[stdout] testing 0
+[stdout] testing 1
+[stdout] testing 2
+[stdout] testing 3
+[stdout] testing 4
+[stdout] testing 5
+[stdout] testing 6
+[stdout] testing 7
+[stdout] testing 8
+[stdout] testing 9
