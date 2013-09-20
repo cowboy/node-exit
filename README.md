@@ -2,6 +2,10 @@
 
 A replacement for process.exit that ensures stdio are fully drained before exiting.
 
+If you're familiar with the seemingly never-ending saga in joyent/node#3584, you already know that Node.js behaves differently on Windows when pipe-redirecting `stdout` or `stderr` vs just displaying output in the shell. Well, this module attempts to work around the issue by waiting until those streams have been completely drained before actually calling `process.exit`.
+
+Based on some code by @vladikoff.
+
 ## Getting Started
 Install the module with: `npm install exit`
 
