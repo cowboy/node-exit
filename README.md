@@ -64,7 +64,7 @@ C:\node-exit\test\fixtures>
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+2013-09-20 - v0.1.0 - Initial release.
 
 ## License
 Copyright (c) 2013 "Cowboy" Ben Alman  
