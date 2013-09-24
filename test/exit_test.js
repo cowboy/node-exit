@@ -35,7 +35,7 @@ function run(command, options, callback) {
     command += ' | ' + (process.platform === 'win32' ? 'find' : 'grep') + ' "std"';
   }
   exec(command, function(error, stdout) {
-    callback(error ? error.code : 0, stdout);
+    callback(command, error ? error.code : 0, stdout);
   });
 }
 
@@ -73,8 +73,7 @@ exports['exit'] = {
     var counts = [10, 100, 1000];
     test.expect(counts.length);
     async.eachSeries(counts, function(n, next) {
-      var command = 'node log.js 0 ' + n + ' stdout stderr';
-      run(command, {pipe: true}, function(code, actual) {
+      run('node log.js 0 ' + n + ' stdout stderr', {pipe: true}, function(command, code, actual) {
         var expected = fixture(n + '-stdout-stderr.txt');
         test.equal(true, showDiff(actual, expected), command);
         next();
@@ -85,8 +84,7 @@ exports['exit'] = {
     var counts = [10, 100, 1000];
     test.expect(counts.length);
     async.eachSeries(counts, function(n, next) {
-      var command = 'node log.js 0 ' + n + ' stdout';
-      run(command, {pipe: true}, function(code, actual) {
+      run('node log.js 0 ' + n + ' stdout', {pipe: true}, function(command, code, actual) {
         var expected = fixture(n + '-stdout.txt');
         test.equal(true, showDiff(actual, expected), command);
         next();
@@ -97,8 +95,7 @@ exports['exit'] = {
     var counts = [10, 100, 1000];
     test.expect(counts.length);
     async.eachSeries(counts, function(n, next) {
-      var command = 'node log.js 0 ' + n + ' stderr';
-      run(command, {pipe: true}, function(code, actual) {
+      run('node log.js 0 ' + n + ' stderr', {pipe: true}, function(command, code, actual) {
         var expected = fixture(n + '-stderr.txt');
         test.equal(true, showDiff(actual, expected), command);
         next();
@@ -109,8 +106,7 @@ exports['exit'] = {
     var codes = [0, 1, 123];
     test.expect(codes.length * 2);
     async.eachSeries(codes, function(n, next) {
-      var command = 'node log.js ' + n + ' 10 stdout stderr';
-      run(command, {pipe: false}, function(code, actual) {
+      run('node log.js ' + n + ' 10 stdout stderr', {pipe: false}, function(command, code, actual) {
         test.equal(code, n, 'should have exited with ' + n + ' error code.');
         var expected = fixture('10-stdout-stderr.txt');
         test.equal(true, showDiff(actual, expected), command);
