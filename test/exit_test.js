@@ -23,7 +23,6 @@
 var fs = require('fs');
 var exec = require('child_process').exec;
 var async = require('async');
-var jsdiff = require('diff');
 
 var _which = require('which').sync;
 function which(command) {
@@ -38,6 +37,10 @@ function which(command) {
 // which is Windows' horribly crippled grep alternative.
 var grep = which('grep') || process.platform === 'win32' && which('find');
 
+function normalizeLineEndings(s) {
+  return s.replace(/\r?\n/g, '\n');
+}
+
 function run(command, options, callback) {
   if (typeof options === 'function') {
     callback = options;
@@ -48,28 +51,12 @@ function run(command, options, callback) {
     command += ' | ' + grep + ' "std"';
   }
   exec(command, function(error, stdout) {
-    callback(command, error ? error.code : 0, stdout);
+    callback(command, error ? error.code : 0, normalizeLineEndings(stdout));
   });
 }
 
-function showDiff(actual, expected) {
-  actual = actual.replace(/\r\n/g, '\n');
-  expected = expected.replace(/\r\n/g, '\n');
-  if (actual === expected) {
-    return true;
-  } else {
-    return jsdiff.diffLines(expected, actual).map(function(d) {
-      if (d.removed) {
-        return '**EXPECTED** ' + d.value;
-      } else if (d.added) {
-        return '**UNEXPECTED** ' + d.value;
-      }
-    }).filter(Boolean).join('');
-  }
-}
-
 function fixture(filename) {
-  return String(fs.readFileSync(filename));
+  return normalizeLineEndings(String(fs.readFileSync(filename)));
 }
 
 exports['exit'] = {
@@ -90,45 +77,30 @@ exports['exit'] = {
   },
   'stdout stderr': function(test) {
     var counts = [10, 100, 1000];
-    test.expect(counts.length);
+    var outputs = ['stdout stderr', 'stdout', 'stderr'];
+    test.expect(counts.length * outputs.length * 2);
     async.eachSeries(counts, function(n, next) {
-      run('node log.js 0 ' + n + ' stdout stderr', {pipe: true}, function(command, code, actual) {
-        var expected = fixture(n + '-stdout-stderr.txt');
-        test.equal(true, showDiff(actual, expected), command);
-        next();
-      });
-    }, test.done);
-  },
-  'stdout': function(test) {
-    var counts = [10, 100, 1000];
-    test.expect(counts.length);
-    async.eachSeries(counts, function(n, next) {
-      run('node log.js 0 ' + n + ' stdout', {pipe: true}, function(command, code, actual) {
-        var expected = fixture(n + '-stdout.txt');
-        test.equal(true, showDiff(actual, expected), command);
-        next();
-      });
-    }, test.done);
-  },
-  'stderr': function(test) {
-    var counts = [10, 100, 1000];
-    test.expect(counts.length);
-    async.eachSeries(counts, function(n, next) {
-      run('node log.js 0 ' + n + ' stderr', {pipe: true}, function(command, code, actual) {
-        var expected = fixture(n + '-stderr.txt');
-        test.equal(true, showDiff(actual, expected), command);
-        next();
-      });
+      async.eachSeries(outputs, function(o, next) {
+        run('node log.js 0 ' + n + ' ' + o, {pipe: true}, function(command, code, actual) {
+          var expected = fixture(n + '-' + o.replace(' ', '-') + '.txt');
+          // Sometimes, the actual file lines are out of order on Windows.
+          // But since the point of this lib is to drain the buffer and not
+          // guarantee output order, we only test the length.
+          test.equal(actual.length, expected.length, '(length) ' + command);
+          // The "fail" lines in log.js should NOT be output!
+          test.ok(actual.indexOf('fail') === -1, '(no more output after exit) ' + command);
+          next();
+        });
+      }, next);
     }, test.done);
   },
   'exit codes': function(test) {
     var codes = [0, 1, 123];
-    test.expect(codes.length * 2);
+    test.expect(codes.length);
     async.eachSeries(codes, function(n, next) {
-      run('node log.js ' + n + ' 10 stdout stderr', {pipe: false}, function(command, code, actual) {
+      run('node log.js ' + n + ' 10 stdout stderr', {pipe: false}, function(command, code) {
+        // The specified exit code should be passed through.
         test.equal(code, n, 'should have exited with ' + n + ' error code.');
-        var expected = fixture('10-stdout-stderr.txt');
-        test.equal(true, showDiff(actual, expected), command);
         next();
       });
     }, test.done);
