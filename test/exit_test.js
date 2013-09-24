@@ -27,7 +27,8 @@ var async = require('async');
 var _which = require('which').sync;
 function which(command) {
   try {
-    return _which(command);
+    _which(command);
+    return command;
   } catch (err) {
     return false;
   }
