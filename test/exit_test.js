@@ -25,6 +25,19 @@ var exec = require('child_process').exec;
 var async = require('async');
 var jsdiff = require('diff');
 
+var _which = require('which').sync;
+function which(command) {
+  try {
+    return _which(command);
+  } catch (err) {
+    return false;
+  }
+}
+
+// Look for grep first (any OS). If not found (but on Windows) look for find,
+// which is Windows' horribly crippled grep alternative.
+var grep = which('grep') || process.platform === 'win32' && which('find');
+
 function run(command, options, callback) {
   if (typeof options === 'function') {
     callback = options;
@@ -32,7 +45,7 @@ function run(command, options, callback) {
   }
   command += ' 2>&1';
   if (options.pipe) {
-    command += ' | ' + (process.platform === 'win32' ? 'find' : 'grep') + ' "std"';
+    command += ' | ' + grep + ' "std"';
   }
   exec(command, function(error, stdout) {
     callback(command, error ? error.code : 0, stdout);
@@ -68,6 +81,12 @@ exports['exit'] = {
   tearDown: function(done) {
     process.chdir(this.origCwd);
     done();
+  },
+  'grep': function(test) {
+    test.expect(1);
+    // Many unit tests depend on this.
+    test.ok(grep, 'A suitable "grep" or "find" program was not found in the PATH.');
+    test.done();
   },
   'stdout stderr': function(test) {
     var counts = [10, 100, 1000];
