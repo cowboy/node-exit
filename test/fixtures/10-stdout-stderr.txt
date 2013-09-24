@@ -1,20 +1,20 @@
-[stdout] testing 0
-[stderr] testing 0
-[stdout] testing 1
-[stderr] testing 1
-[stdout] testing 2
-[stderr] testing 2
-[stdout] testing 3
-[stderr] testing 3
-[stdout] testing 4
-[stderr] testing 4
-[stdout] testing 5
-[stderr] testing 5
-[stdout] testing 6
-[stderr] testing 6
-[stdout] testing 7
-[stderr] testing 7
-[stdout] testing 8
-[stderr] testing 8
-[stdout] testing 9
-[stderr] testing 9
+stdout 0
+stderr 0
+stdout 1
+stdout 2
+stderr 1
+stdout 3
+stderr 2
+stderr 3
+stdout 4
+stderr 4
+stdout 5
+stderr 5
+stdout 6
+stderr 6
+stdout 7
+stderr 7
+stdout 8
+stderr 8
+stdout 9
+stderr 9
