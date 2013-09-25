@@ -32,7 +32,6 @@
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt-contrib-watch": "~0.5.3",
     "grunt": "~0.4.1",
-    "async": "~0.2.9",
     "which": "~1.0.5"
   },
   "keywords": [
