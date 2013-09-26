@@ -32,28 +32,30 @@ console.error("bar");
 
 In Windows, clone the repo and cd to the `test\fixtures` directory. The only difference between [log.js](test/fixtures/log.js) and [log-broken.js](test/fixtures/log-broken.js) is that the former uses `exit` while the latter calls `process.exit` directly.
 
+This test was done using cmd.exe, but you can see the same results using `| grep "std"` in either PowerShell or git-bash.
+
 ```
 C:\node-exit\test\fixtures>node log.js 0 10 stdout stderr 2>&1 | find "std"
-[stdout] testing 0
-[stderr] testing 0
-[stdout] testing 1
-[stderr] testing 1
-[stdout] testing 2
-[stderr] testing 2
-[stdout] testing 3
-[stderr] testing 3
-[stdout] testing 4
-[stderr] testing 4
-[stdout] testing 5
-[stderr] testing 5
-[stdout] testing 6
-[stderr] testing 6
-[stdout] testing 7
-[stderr] testing 7
-[stdout] testing 8
-[stderr] testing 8
-[stdout] testing 9
-[stderr] testing 9
+stdout 0
+stderr 0
+stdout 1
+stderr 1
+stdout 2
+stderr 2
+stdout 3
+stderr 3
+stdout 4
+stderr 4
+stdout 5
+stderr 5
+stdout 6
+stderr 6
+stdout 7
+stderr 7
+stdout 8
+stderr 8
+stdout 9
+stderr 9
 
 C:\node-exit\test\fixtures>node log-broken.js 0 10 stdout stderr 2>&1 | find "std"
 
