@@ -18,6 +18,3 @@ for (var i = 0; i < max; i++) {
 }
 
 process.exit(errorCode);
-
-stdout('fail');
-stderr('fail');

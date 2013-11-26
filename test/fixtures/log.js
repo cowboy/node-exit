@@ -20,6 +20,3 @@ for (var i = 0; i < max; i++) {
 }
 
 exit(errorCode);
-
-stdout('fail');
-stderr('fail');
