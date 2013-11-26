@@ -1998,3 +1998,5 @@ stdout 998
 stderr 998
 stdout 999
 stderr 999
+stdout event
+stderr event

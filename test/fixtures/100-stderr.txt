@@ -98,3 +98,4 @@ stderr 96
 stderr 97
 stderr 98
 stderr 99
+stderr event

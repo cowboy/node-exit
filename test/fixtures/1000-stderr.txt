@@ -998,3 +998,4 @@ stderr 996
 stderr 997
 stderr 998
 stderr 999
+stderr event

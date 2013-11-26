@@ -98,3 +98,4 @@ stdout 96
 stdout 97
 stdout 98
 stdout 99
+stdout event

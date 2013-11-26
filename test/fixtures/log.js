@@ -19,6 +19,11 @@ for (var i = 0; i < max; i++) {
   stderr(i);
 }
 
+process.on('exit', function() {
+  stdout('event');
+  stderr('event');
+});
+
 exit(errorCode);
 
 stdout('fail');

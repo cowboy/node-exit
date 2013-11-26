@@ -1,10 +1,10 @@
 stdout 0
 stderr 0
 stdout 1
-stdout 2
 stderr 1
-stdout 3
+stdout 2
 stderr 2
+stdout 3
 stderr 3
 stdout 4
 stderr 4
@@ -18,3 +18,5 @@ stdout 8
 stderr 8
 stdout 9
 stderr 9
+stdout event
+stderr event

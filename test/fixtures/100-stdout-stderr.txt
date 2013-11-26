@@ -198,3 +198,5 @@ stdout 98
 stderr 98
 stdout 99
 stderr 99
+stdout event
+stderr event

@@ -998,3 +998,4 @@ stdout 996
 stdout 997
 stdout 998
 stdout 999
+stdout event

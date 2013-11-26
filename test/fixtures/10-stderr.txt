@@ -8,3 +8,4 @@ stderr 6
 stderr 7
 stderr 8
 stderr 9
+stderr event
