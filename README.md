@@ -1,4 +1,4 @@
-# exit [![Build Status](https://secure.travis-ci.org/cowboy/node-exit.png?branch=master)](http://travis-ci.org/cowboy/node-exit)
+# exit [![Build Status](https://secure.travis-ci.org/cowboy/node-exit.svg?branch=master)](http://travis-ci.org/cowboy/node-exit)
 
 A replacement for process.exit that ensures stdio are fully drained before exiting.
 
