@@ -22,10 +22,6 @@ console.error("yay");
 
 // process.exit(5);
 exit(5);
-
-// These lines shouldn't appear in the output.
-console.log("wtf");
-console.error("bro");
 ```
 
 ## Don't believe me? Try it for yourself.

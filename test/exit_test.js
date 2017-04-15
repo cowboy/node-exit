@@ -83,15 +83,13 @@ function buildTests() {
       pipes.forEach(function(pipe) {
         var command = 'node log.js 0 ' + count + output + ' 2>&1' + pipe;
         exports['exit']['output (' + command + ')'] = function(test) {
-          test.expect(2);
+          test.expect(1);
           run(command, function(code, actual) {
             var expected = fixture(count + output.replace(/ /g, '-') + '.txt');
             // Sometimes, the actual file lines are out of order on Windows.
             // But since the point of this lib is to drain the buffer and not
             // guarantee output order, we only test the length.
             test.equal(actual.length, expected.length, 'should be the same length.');
-            // The "fail" lines in log.js should NOT be output!
-            test.ok(actual.indexOf('fail') === -1, 'should not output after exit is called.');
             test.done();
           });
         };
