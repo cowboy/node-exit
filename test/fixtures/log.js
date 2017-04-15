@@ -20,6 +20,9 @@ for (var i = 0; i < max; i++) {
 }
 
 exit(errorCode);
+process.on('exit', function() { 
+  exit(errorCode) 
+})
 
 stdout('fail');
 stderr('fail');
