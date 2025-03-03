@@ -2,6 +2,8 @@
 
 A replacement for process.exit that ensures stdio are fully drained before exiting.
 
+**This module addresses a bug that was [resolved in version 0.12 of Node.js](https://github.com/nodejs/node-v0.x-archive/commit/20176a9). Projects that do not need support for earlier releases of Node.js can use `process.exit` directly, without the support of this module.**
+
 To make a long story short, if `process.exit` is called on Windows, script output is often truncated when pipe-redirecting `stdout` or `stderr`. This module attempts to work around this issue by waiting until those streams have been completely drained before actually calling `process.exit`.
 
 See [Node.js issue #3584](https://github.com/joyent/node/issues/3584) for further reference.
